@@ -42,6 +42,7 @@ pipeline {
                     kubeconfigId: 'kubeconfig',
                     configs: 'myapp.yaml',
                     enableConfigSubstitution: true
+                }
                     
             }
         }
