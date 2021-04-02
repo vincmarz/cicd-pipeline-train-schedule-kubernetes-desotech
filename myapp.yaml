@@ -1,7 +1,8 @@
-kind: Service
 apiVersion: v1
+kind: Service
 metadata:
   name: train-schedule-service
+  namespace: default
 spec:
   type: NodePort
   selector:
@@ -16,11 +17,12 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: kirey-deployment
+  name: desotech-deployment
+  namespace: default
   labels:
     app: train-schedule
 spec:
-  replicas: 2
+  replicas: 3
   selector:
     matchLabels:
       app: train-schedule

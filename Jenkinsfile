@@ -1,8 +1,9 @@
 pipeline {
     agent any
     environment {
-        //be sure to replace "willbla" with your own Docker Hub username
-        DOCKER_IMAGE_NAME = "fgrimaldi/train-schedule"
+        DOCKER_IMAGE_NAME = "<YOUR_USERNAME>/train-schedule"
+        DOCKER_IMAGE_TAG = 'latest'
+        DOCKER_REGISTRY = 'https://registry.hub.docker.com'
     }
     stages {
         stage('Build') {
@@ -13,7 +14,7 @@ pipeline {
             }
         }
         stage('Build Docker Image') {
-           
+
             steps {
                 script {
                     app = docker.build(DOCKER_IMAGE_NAME)
@@ -24,10 +25,10 @@ pipeline {
             }
         }
         stage('Push Docker Image') {
-         
+
             steps {
                 script {
-                    docker.withRegistry('https://registry.hub.docker.com', 'docker_hub_login') {
+                    docker.withRegistry(DOCKER_REGISTRY, 'docker_hub_login') {
                         app.push("${env.BUILD_NUMBER}")
                         app.push("latest")
                     }
@@ -35,15 +36,15 @@ pipeline {
             }
         }
         stage('DeployToProduction') {
-            
+
             steps {
-                
+
                 kubernetesDeploy(
                     kubeconfigId: 'kubeconfig',
                     configs: 'myapp.yaml',
                     enableConfigSubstitution: true
                 )
-                    
+
             }
         }
     }
