@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        DOCKER_IMAGE_NAME = "<YOUR_USERNAME>/train-schedule"
+        DOCKER_IMAGE_NAME = "fgrimaldi/train-schedule"
         DOCKER_IMAGE_TAG = 'latest'
         DOCKER_REGISTRY = 'https://registry.hub.docker.com'
     }
