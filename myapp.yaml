@@ -1,8 +1,20 @@
 apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    kubernetes.io/metadata.name: train-schedule
+  name: train-schedule
+spec:
+  finalizers:
+  - kubernetes
+
+---
+  
+apiVersion: v1
 kind: Service
 metadata:
   name: train-schedule-service
-  namespace: default
+  namespace: train-schedule
 spec:
   type: NodePort
   selector:
@@ -17,8 +29,8 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: desotech-deployment
-  namespace: default
+  name: train-schedule-deployment
+  namespace: train-schedule
   labels:
     app: train-schedule
 spec:
